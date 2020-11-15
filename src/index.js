@@ -1,8 +1,6 @@
-const a = 10
-const b = 20
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-console.log(a + b)
+import App from './app'
 
-const add = () => {
-  return 10
-}
+ReactDOM.render(<App />, document.getElementById('app'))
