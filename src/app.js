@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import styled from 'styled-components'
 
+import GlobalStyles from './components/global-styles'
 import MainPage from './pages/main'
 import LoginPage from './pages/login'
 import MyInfoPage from './pages/my-info'
@@ -16,6 +17,7 @@ const Container = styled.div`
 function App() {
   return (
     <Container>
+      <GlobalStyles />
       <Router>
         <Switch>
           <Route exact path="/" component={MainPage} />
