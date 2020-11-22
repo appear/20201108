@@ -23,7 +23,13 @@ const RemoveText = styled.span`
 const ListContainer = styled.ul`
   margin: 10px 0;
 `
-const KeywordContainer = styled.li``
+const KeywordContainer = styled.li`
+  overflow: hidden;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+`
 
 const RemoveButton = styled.button`
   float: right;
@@ -38,19 +44,25 @@ const Keyword = styled.span`
   font-weight: 400;
 `
 
-function History({ keywords }) {
+function History({ keywords, onClearKeywords, onRemoveKeyword }) {
+  if (keywords.length === 0) {
+    return <HistoryContainer>최근 검색된 기록이 없습니다.</HistoryContainer>
+  }
+
   return (
     <HistoryContainer>
       <HeaderContainer>
         <Title>최근검색어</Title>
-        <RemoveText>전체삭제</RemoveText>
+        <RemoveText onClick={onClearKeywords}>전체삭제</RemoveText>
       </HeaderContainer>
       <ListContainer>
         {keywords.map(({ id, text }) => {
           return (
             <KeywordContainer key={id}>
               <Keyword>{text}</Keyword>
-              <RemoveButton>삭제</RemoveButton>
+              <RemoveButton onClick={() => onRemoveKeyword(id)}>
+                삭제
+              </RemoveButton>
             </KeywordContainer>
           )
         })}
