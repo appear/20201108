@@ -8,7 +8,7 @@ function AuthRoute({ auth, ...props }) {
   const history = useHistory()
 
   if (auth && user === null) {
-    history.replace('/login')
+    history.replace('/signin')
     return null
   }
 

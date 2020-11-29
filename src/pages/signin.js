@@ -2,7 +2,7 @@ import React from 'react'
 
 import Form from '../components/signin/form'
 
-function LoginPage() {
+function SignInPage() {
   return (
     <div>
       <Form />
@@ -10,4 +10,4 @@ function LoginPage() {
   )
 }
 
-export default LoginPage
+export default SignInPage

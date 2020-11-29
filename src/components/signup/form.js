@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useHistory, Link } from 'react-router-dom'
 
-import { fetchLogin } from './service'
-import { useUserContext } from '../contexts/user-context'
+import { requestSignup } from './service'
 
 const Container = styled.div`
   margin-top: 100px;
@@ -44,33 +43,36 @@ const Button = styled.div`
 `
 
 function Form() {
-  const { setUser } = useUserContext()
   const history = useHistory()
-  const [loginInfo, setLoginInfo] = useState({
+  const [formValues, setformValues] = useState({
     id: '',
     password: '',
+    rePassword: '',
+    name: '',
   })
 
-  const { id, password } = loginInfo
+  const { id, password, rePassword, name } = formValues
 
   const handleSubmit = async () => {
     try {
-      const user = await fetchLogin(loginInfo)
-      setUser(user)
-      history.replace('/')
+      if (await requestSignup({ id, password, name })) {
+        window.alert('회원가입 성공')
+      } else {
+        window.alert('일시적인 오류로 회원가입에 실패했습니다.')
+      }
     } catch (e) {
       window.alert(e)
     }
   }
-
-  const handleLoginInfo = ({ target: { name, value } }) => {
-    setLoginInfo({
-      ...loginInfo,
+  const handleformValues = ({ target: { name, value } }) => {
+    setformValues({
+      ...formValues,
       [name]: value,
     })
   }
 
-  const isSubmittable = id && password
+  const isMatchedPassword = password && rePassword && password === rePassword
+  const isSubmittable = isMatchedPassword && id && name
 
   return (
     <Container>
@@ -78,25 +80,33 @@ function Form() {
         name="id"
         value={id}
         placeholder="아이디를 입력해주세요"
-        onChange={handleLoginInfo}
+        onChange={handleformValues}
       />
       <Input
         name="password"
         type="password"
         value={password}
         placeholder="비밀번호를 입력해주세요"
-        onChange={handleLoginInfo}
+        onChange={handleformValues}
+      />
+      <Input
+        name="rePassword"
+        type="rePassword"
+        placeholder="비밀번호를 다시 입력해주세요"
+        onChange={handleformValues}
+      />
+      <Input
+        name="name"
+        value={name}
+        placeholder="이름을 입력해주세요"
+        onChange={handleformValues}
       />
       <Button
         disabled={!isSubmittable}
         onClick={isSubmittable ? handleSubmit : () => {}}
       >
-        로그인
+        회원가입
       </Button>
-
-      <Link to="/signup">
-        <Button>회원가입</Button>
-      </Link>
 
       {/**
        * 회원가입 버튼

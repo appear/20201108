@@ -4,10 +4,11 @@ import styled from 'styled-components'
 
 import GlobalStyles from './components/global-styles'
 import MainPage from './pages/main'
-import LoginPage from './pages/login'
+import SignIn from './pages/signin'
 import MyInfoPage from './pages/my-info'
 import SearchPage from './pages/search'
 import ErrorPage from './pages/error'
+import SignUpPage from './pages/signup'
 import Route from './components/auth-route'
 import { UserContextProvider } from './components/contexts/user-context'
 
@@ -24,9 +25,10 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/" component={MainPage} />
-            <Route path="/login" component={LoginPage} />
+            <Route path="/signin" component={SignIn} />
             <Route auth path="/myinfo" component={MyInfoPage} />
             <Route path="/search" component={SearchPage} />
+            <Route path="/signup" component={SignUpPage} />
             <Route component={ErrorPage} />
           </Switch>
         </Router>
